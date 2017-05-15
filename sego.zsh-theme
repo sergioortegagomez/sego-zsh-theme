@@ -13,8 +13,6 @@ ZSH_THEME_GIT_PROMPT_UNMERGED="%{$fg[magenta]%}✂"
 ZSH_THEME_GIT_PROMPT_UNTRACKED="%{$fg[blue]%}✈"
 ZSH_THEME_GIT_PROMPT_SHA_BEFORE="%{$fg[blue]%}"
 ZSH_THEME_GIT_PROMPT_SHA_AFTER="%{$reset_color%}"
-ZSH_THEME_DOCKER_PROMPT="%{$fg_bold[blue]%}Docker%{$reset_color%}"
-ZSH_THEME_DOCKER_COLOR="%{$fg[blue]%}"
 
 function get_git() {
   if [[ "$(git config --get oh-my-zsh.hide-status)" != "1" ]]; then
@@ -24,16 +22,10 @@ function get_git() {
   fi
 }
 
-
-function get_docker_host() {   
-  local _docker="$DOCKER_HOST" 
-  local _docker_remote="%{$fg_bold[$ZSH_THEME_DOCKER_COLOR]%}$_docker%{$reset_color%}"
-  local _docker_status="$_docker_remote" 
-
-  if [[ "$_docker" ]]; then 
-    echo "%{$fg_bold[blue]%}[%{$fg_bold[green]%}$ZSH_THEME_DOCKER_PROMPT{$fg[green]%}$_docker_status%{$fg_bold[blue]%}]%{$reset_color%}"  
-  fi
-  
+function get_docker() {
+  if [ -f /.dockerenv ]; then
+    echo "%{$fg_bold[blue]%}[%{$fg_bold[yellow]%}Docker%{$fg_bold[blue]%}]%{$reset_color%}"
+  fi  
 }
 
 function get_date() {
@@ -44,12 +36,7 @@ function get_user_machine() {
     echo "%{$fg_bold[blue]%}[%{$fg_bold[green]%}%n%b%{$fg[green]%}@%{$fg[green]%}%m%{$fg_bold[blue]%}]%{$reset_color%}"
 }
 
-
-# PROMPT=$'%{$fg_bold[blue]%}┌─[%{$fg_bold[green]%}%n%b%{$fg[black]%}@%{$fg[cyan]%}%m%{$fg_bold[blue]%}]%{$reset_color%} - %{$fg_bold[blue]%}[%{$fg_bold[white]%}%~%{$fg_bold[blue]%}]%{$reset_color%} - %{$fg_bold[blue]%}[%b%{$fg[yellow]%}'%D{"%Y-%m-%d %I:%M:%S"}%b$'%{$fg_bold[blue]%}]
-# %{$fg_bold[blue]%}└─[%{$fg_bold[magenta]%}%?$(retcode)%{$fg_bold[blue]%}] <$(mygit)$(hg_prompt_info)>%{$reset_color%} '
-
-
-PROMPT=$'%{$fg_bold[blue]%}┌─$(get_user_machine)$(get_date)$(get_git)$(get_docker_host)
-%{$fg_bold[blue]%}└─%{$fg_bold[blue]%}[%{$fg_bold[white]%}%~%{$fg_bold[blue]%}]%{$reset_color%}%{$reset_color%} '
+PROMPT=$'%{$fg_bold[blue]%}┌─$(get_user_machine)$(get_date)$(get_git)$(get_docker)
+%{$fg_bold[blue]%}└─%{$fg_bold[blue]%}[%{$fg_bold[white]%}%~%{$fg_bold[blue]%}]%{$reset_color%} '
 PS2=$' \e[0;34m%}%B>%{\e[0m%}%b '
 

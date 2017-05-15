@@ -24,7 +24,7 @@ function get_git() {
 
 function get_docker() {
   if [ -f /.dockerenv ]; then
-    echo "%{$fg_bold[blue]%}[%{$fg_bold[yellow]%}Docker%{$fg_bold[blue]%}]%{$reset_color%}"
+    echo "%{$fg_bold[blue]%}[%{$fg_bold[magenta]%}Docker%{$fg_bold[blue]%}]%{$reset_color%}"
   fi  
 }
 
